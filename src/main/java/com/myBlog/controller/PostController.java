@@ -36,6 +36,5 @@ public class PostController {
         PostDto dto = postService.getPostById(id);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
-=======
->>>>>>> origin/master
+
 }
