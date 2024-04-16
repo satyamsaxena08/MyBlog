@@ -13,19 +13,15 @@ import java.util.Date;
 @ControllerAdvice                   //work as catch block
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-//    @ExceptionHandler(ResourceNotFoundException.class)
-//    public ResponseEntity<ErrorDetails> handelResourceNotFoundException(
-//            ResourceNotFoundException e,
-//            WebRequest webRequest
-//    ){
-//        ErrorDetails errorDetails = new ErrorDetails(e.getMessage(),  new Date(),  webRequest.getDescription(true));
-//        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException e, WebRequest webRequest) {
-     ErrorDetails errorDetails = new ErrorDetails(e.getMessage(), new Date(), webRequest.getDescription(true));
+    public ResponseEntity<ErrorDetails> handelResourceNotFoundException(
+            ResourceNotFoundException e,
+            WebRequest webRequest
+    ){
+        ErrorDetails errorDetails = new ErrorDetails(e.getMessage(),  new Date(),  webRequest.getDescription(true));
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
 
 }
