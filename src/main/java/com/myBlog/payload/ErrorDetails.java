@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErrorDetails {
 
     private String message;
-
     private Date date;
     private String uri;
+
+
 }
