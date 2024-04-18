@@ -35,7 +35,7 @@ public class PostController {
 
     //http:/localhost:8080/api/post/particular?id=1
     @GetMapping
-    public ResponseEntity<PostDto> getPostById(@RequestParam long id){
+    public ResponseEntity<PostDto> getP200ostById(@RequestParam long id){
         PostDto dto = postService.getPostById(id);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
@@ -48,8 +48,11 @@ public class PostController {
 //   }
 
     @GetMapping("/getAll")
-    public List<PostDto> getAllPost(){
-     List<PostDto> dtos = postService.getAllPosts();
+    public List<PostDto> getAllPost(
+            @RequestParam (value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize",defaultValue = "5",required = false) int pageSize
+    ){
+     List<PostDto> dtos = postService.getAllPosts(pageNo, pageSize);
         return dtos;
 
     }

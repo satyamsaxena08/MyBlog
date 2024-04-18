@@ -10,7 +10,7 @@ public interface PostService {
 
     PostDto getPostById(long id);
 
-    List<PostDto> getAllPosts();
+    List<PostDto> getAllPosts(int pageNo, int pageSize);
 
 
 //    List<PostDto> getAllPost();
