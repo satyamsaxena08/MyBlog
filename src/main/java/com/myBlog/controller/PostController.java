@@ -26,6 +26,7 @@ public class PostController {
         this.postService = postService;
     }
 
+    //http:/localhost:8080/api/post
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
 
@@ -47,21 +48,20 @@ public class PostController {
 //      return postDtos;
 //   }
 
+    //http:/localhost:8080/api/post?pageNo&pageSize
+    //http:/localhost:8080/api/post?pageNo=0&pageSize=5
+    //http:/localhost:8080/api/post?pageNo=0&pageSize=5&sortBy=title
     @GetMapping("/getAll")
     public List<PostDto> getAllPost(
             @RequestParam (value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize",defaultValue = "5",required = false) int pageSize
+            @RequestParam(value = "pageSize",defaultValue = "5",required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "id", required = false) String sortDir
     ){
-     List<PostDto> dtos = postService.getAllPosts(pageNo, pageSize);
+     List<PostDto> dtos = postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
         return dtos;
 
     }
-
-
-
-
-
-
 
 
 }
