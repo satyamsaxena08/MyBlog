@@ -22,4 +22,10 @@ public class CommentController {
         CommentDto dto = commentService.createComments(commentDto, postId);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable long id){
+        commentService.deleteCommernt(id);
+        return new ResponseEntity<>("comment is deleted!!",HttpStatus.OK);
+
+    }
 }

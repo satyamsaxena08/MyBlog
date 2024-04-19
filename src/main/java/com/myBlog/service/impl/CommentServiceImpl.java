@@ -7,6 +7,7 @@ import com.myBlog.payload.CommentDto;
 import com.myBlog.repository.CommentRepository;
 import com.myBlog.repository.PostRepository;
 import com.myBlog.service.CommentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,12 @@ public class CommentServiceImpl implements CommentService {
 
     private PostRepository postRepository;
     private CommentRepository commentRepository;
+    private ModelMapper modelMapper;
 
-    public CommentServiceImpl(PostRepository postRepository, CommentRepository commentRepository) {
+    public CommentServiceImpl(PostRepository postRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -26,17 +29,27 @@ public class CommentServiceImpl implements CommentService {
                 () -> new ResourceNotFoundException("Post is Not Find With Id :- " + postId)
         );
         //if post found then copy content from dto to comment object
-        Comment comment = new Comment();
-        comment.setEmail(commentDto.getEmail());
-        comment.setText(commentDto.getText());
-        comment.setPost(post);
+//        Comment comment = new Comment();
+//        comment.setEmail(commentDto.getEmail());
+//        comment.setText(commentDto.getText());
+//        comment.setPost(post);
+
+        Comment comment = modelMapper.map(commentDto, Comment.class);
+
 
         Comment savedComment = commentRepository.save(comment);
 
-        CommentDto dto = new CommentDto();
-        dto.setId(savedComment.getId());
-        dto.setEmail(savedComment.getEmail());
-        dto.setText(savedComment.getText());
+//        CommentDto dto = new CommentDto();
+//        dto.setId(savedComment.getId());
+//        dto.setEmail(savedComment.getEmail());
+//        dto.setText(savedComment.getText());
+
+        CommentDto dto = modelMapper.map(comment, CommentDto.class);
         return dto;
+    }
+
+    @Override
+    public void deleteCommernt(long id) {
+        commentRepository.deleteById(id);
     }
 }
