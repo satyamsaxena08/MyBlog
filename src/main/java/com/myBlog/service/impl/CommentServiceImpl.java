@@ -52,4 +52,34 @@ public class CommentServiceImpl implements CommentService {
     public void deleteCommernt(long id) {
         commentRepository.deleteById(id);
     }
+
+    @Override
+    public CommentDto updateComment(long id, CommentDto commentDto, long postId) {
+
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("post not find with id:" + id)
+        );
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Comment Not Found With id:" + id)
+        );
+
+        Comment comment1 = mapToEntity(commentDto);
+        comment1.setId(comment.getId());
+        comment1.setPost(post);
+        Comment save = commentRepository.save(comment1);
+
+        return mapToDto(save);
+    }
+
+
+    Comment mapToEntity(CommentDto commentDto){
+        Comment comment = modelMapper.map(commentDto, Comment.class);
+        return comment;
+
+    }
+
+    CommentDto mapToDto(Comment comment){
+        CommentDto dto = modelMapper.map(comment, CommentDto.class);
+        return dto;
+    }
 }
