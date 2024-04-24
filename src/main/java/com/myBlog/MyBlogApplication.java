@@ -13,7 +13,9 @@ public class MyBlogApplication {
 	}
 	@Bean
 	public ModelMapper getModelMapper(){
+
 		return new ModelMapper();
+
 	}
 
 }
