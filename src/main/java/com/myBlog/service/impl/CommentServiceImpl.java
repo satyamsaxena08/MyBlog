@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
 //        comment.setPost(post);
 
         Comment comment = modelMapper.map(commentDto, Comment.class);
-
+        comment.setPost(post);
 
         Comment savedComment = commentRepository.save(comment);
 
@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteCommernt(long id) {
+    public void deleteComment(long id) {
         commentRepository.deleteById(id);
     }
 

@@ -6,7 +6,7 @@ public interface CommentService {
 
        CommentDto createComments(CommentDto commentDto,long postId);
 
-    void deleteCommernt(long id);
+    void deleteComment(long id);
 
-    CommentDto updateComment(long id, CommentDto commentDto);
+    CommentDto updateComment(long id, CommentDto commentDto, long postId);
 }

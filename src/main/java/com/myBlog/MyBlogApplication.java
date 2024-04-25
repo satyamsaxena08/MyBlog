@@ -13,7 +13,7 @@ public class MyBlogApplication {
 	}
 	@Bean
 	public ModelMapper getModelMapper(){
-	System.out.println("hello branch");
+
 		return new ModelMapper();
 
 	}
