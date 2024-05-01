@@ -2,12 +2,20 @@ package com.myBlog.controller;
 
 import com.myBlog.entity.Role;
 import com.myBlog.entity.User;
+import com.myBlog.payload.LoginDto;
 import com.myBlog.payload.SignUpDto;
 import com.myBlog.repository.RoleRepository;
 import com.myBlog.repository.UserRepository;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashSet;
 import java.util.Set;
 
+@Configuration
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    @Autowired
+    public AuthenticationManager authenticationManager;  //this have credential from db
     @Autowired
     private UserRepository userRepository;
 
@@ -59,4 +70,25 @@ public class AuthController {
         userRepository.save(user);
         return new ResponseEntity<>("User Registered successfully",HttpStatus.OK);
     }
+
+    @PostMapping("/signIn")
+    public ResponseEntity<String> signIn(@RequestBody LoginDto loginDto){
+       //1.Supply loginDto.getUsername()-username to loadByUser method in CustomUserDetail class
+        //2.it will compare username password
+        //3.Expected Credential  - loginDto.getUsername(), loginDto.getPassword()
+        //with actual credential given by loadByUser method
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = //this have credential from user
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+
+        Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+        //Similar to session variable
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+
+
+
+        return new ResponseEntity<>("User signed-in successful!.",HttpStatus.OK);
+    }
+
+
 }

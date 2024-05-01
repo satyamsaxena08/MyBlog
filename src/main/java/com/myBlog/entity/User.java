@@ -12,7 +12,7 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
-public class User {
+public class User { //parent table
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -22,9 +22,9 @@ public class User {
     private String password;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),// JoinColumn parent to 3re table
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))// inverseJoinColumns - child to 3rd table
+    private Set<Role> roles;//role not be duplicate
 
 
 

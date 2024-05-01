@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 
 @SpringBootApplication
 public class MyBlogApplication {
@@ -16,5 +17,7 @@ public class MyBlogApplication {
 		return new ModelMapper();
 
 	}
+
+
 
 }
